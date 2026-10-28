@@ -63,8 +63,8 @@ def load_models():
         nlp = spacy.load("en_core_web_sm")
     except OSError:
         try:
-            import spacy.cli
-            spacy.cli.download("en_core_web_sm")
+            from spacy.cli import download as spacy_download
+            spacy_download("en_core_web_sm")
             nlp = spacy.load("en_core_web_sm")
         except Exception:
             raise RuntimeError(
