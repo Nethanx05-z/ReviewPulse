@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReviewPulse - Project Presentation Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b1120;
+      color: #f1f5f9;
+      user-select: none;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+      transform: scale(0.98);
+      height: 100vh;
+      width: 100vw;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-badge {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+    }
+    pre, code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen relative">
+
+  <!-- Top Progress Bar -->
+  <div class="fixed top-0 left-0 w-full h-1.5 bg-slate-800 z-50">
+    <div id="progressBar" class="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 transition-all duration-300 w-1/12"></div>
+  </div>
+
+  <!-- Top Header / Metadata -->
+  <div class="fixed top-3 left-6 right-6 flex items-center justify-between text-xs text-slate-400 z-40">
+    <div class="flex items-center space-x-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-bold tracking-widest uppercase text-slate-300">REVIEWPULSE | ABSA PRESENTATION</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span id="slideCounter" class="bg-slate-800/80 px-2.5 py-1 rounded-md text-slate-300 font-mono font-semibold">1 / 12</span>
+      <button onclick="toggleSpeakerNotes()" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center space-x-1">
+        <i class="fa-solid fa-microphone text-xs"></i>
+        <span>Notes (S)</span>
+      </button>
+      <button onclick="toggleFullscreen()" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+        <i class="fa-solid fa-expand text-xs"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- SLIDES CONTAINER -->
+
+  <!-- SLIDE 1: Title Slide -->
+  <section class="slide active flex-col items-center justify-center p-8 text-center" data-title="Title Slide">
+    <div class="max-w-4xl space-y-6">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+        <i class="fa-solid fa-code-branch"></i>
+        <span>Natural Language Processing & Data Mining</span>
+      </div>
+      <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight">
+        <span class="gradient-text">ReviewPulse</span>
+      </h1>
+      <p class="text-2xl md:text-3xl font-semibold text-slate-200">
+        Aspect-Based Sentiment Analysis of Product Reviews
+      </p>
+      <p class="text-slate-400 text-base max-w-2xl mx-auto leading-relaxed">
+        Decomposing contradictory consumer feedback into granular feature intelligence through contrastive clause division, spaCy POS extraction, and domain-augmented lexicon scoring.
+      </p>
+
+      <div class="pt-6 flex flex-wrap justify-center gap-3">
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-medium text-slate-300"><i class="fa-brands fa-python text-yellow-400 mr-1.5"></i>Python 3.9</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-medium text-slate-300"><i class="fa-solid fa-brain text-purple-400 mr-1.5"></i>spaCy NLP</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-medium text-slate-300"><i class="fa-solid fa-gauge-high text-emerald-400 mr-1.5"></i>VADER Sentiment</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-medium text-slate-300"><i class="fa-solid fa-desktop text-rose-400 mr-1.5"></i>Streamlit & Vercel</span>
+      </div>
+      <div class="pt-4 text-xs text-slate-500 font-mono">
+        Presenter: Nethan Malcome Gonsalves &bull; Press [Space] or [&rarr;] to navigate
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: The Core Problem -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="The Problem">
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+      <span class="text-xs font-bold text-rose-400 uppercase tracking-widest"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i>The Challenge</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Why Traditional Sentiment Analysis Fails</h2>
+
+      <!-- Case study box -->
+      <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-amber-500 mt-4">
+        <p class="text-xs uppercase tracking-wider text-amber-400 font-bold mb-1">Real-World Customer Review on Amazon / Flipkart:</p>
+        <p class="text-xl md:text-2xl font-medium text-slate-100 italic">
+          "The battery easily lasts two days, <span class="text-rose-400 font-bold underline">but</span> the camera is blurry in low light."
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+        <div class="glass-panel p-6 rounded-2xl border border-rose-500/20 bg-rose-950/10">
+          <div class="text-rose-400 font-bold text-lg mb-2"><i class="fa-solid fa-xmark mr-2"></i>Monolithic Classifiers (Standard NLP)</div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Averages words across the entire review: Positive battery (+0.5) + Negative camera (-0.5) = <strong class="text-white">0.00 (Neutral / 3 Stars)</strong>.
+          </p>
+          <ul class="text-xs text-slate-400 space-y-1.5 mt-4">
+            <li>&bull; <strong class="text-rose-300">Shoppers:</strong> Can't tell whether battery or camera is good.</li>
+            <li>&bull; <strong class="text-rose-300">Engineers:</strong> Critical hardware lens flaw is completely masked.</li>
+          </ul>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-emerald-500/20 bg-emerald-950/10">
+          <div class="text-emerald-400 font-bold text-lg mb-2"><i class="fa-solid fa-check mr-2"></i>Aspect-Based Sentiment Analysis (ReviewPulse)</div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Segments clauses across contrastive boundaries and evaluates each attribute independently:
+          </p>
+          <div class="mt-4 space-y-2 font-mono text-xs">
+            <div class="p-2 rounded bg-slate-900/80 flex justify-between items-center">
+              <span>Aspect: <strong class="text-emerald-400">battery</strong></span>
+              <span class="text-emerald-400 font-bold">+0.49 &bull; Positive</span>
+            </div>
+            <div class="p-2 rounded bg-slate-900/80 flex justify-between items-center">
+              <span>Aspect: <strong class="text-rose-400">camera</strong></span>
+              <span class="text-rose-400 font-bold">-0.36 &bull; Negative</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: The Solution -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="The Solution">
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+      <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest"><i class="fa-solid fa-bullseye mr-1.5"></i>The Objective</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">ReviewPulse: Core Philosophy</h2>
+      <p class="text-slate-300 text-base max-w-3xl">
+        Shifting the paradigm from document-level binary labeling to fine-grained, component-level consumer intelligence.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4">
+        <div class="glass-panel p-5 rounded-xl border-t-2 border-t-cyan-500">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold mb-3">1</div>
+          <h3 class="font-bold text-white text-base">Segment</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Splits sentences at contrastive conjunctions (<em>but, however, while</em>) to isolate conflicting opinions.</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl border-t-2 border-t-blue-500">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold mb-3">2</div>
+          <h3 class="font-bold text-white text-base">Extract</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Employs spaCy POS tagging & lemmatization to extract nouns and normalize synonyms (<em>display &rarr; screen</em>).</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl border-t-2 border-t-indigo-500">
+          <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold mb-3">3</div>
+          <h3 class="font-bold text-white text-base">Score</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Computes localized clause polarity with VADER augmented by custom tech weights (<em>blurry, overheats</em>).</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl border-t-2 border-t-emerald-500">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold mb-3">4</div>
+          <h3 class="font-bold text-white text-base">Synthesize</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Assigns verdicts (Good, Mixed, Poor) and generates natural language pros/cons summaries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: Architecture & Pipeline -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="System Architecture">
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+      <span class="text-xs font-bold text-purple-400 uppercase tracking-widest"><i class="fa-solid fa-diagram-project mr-1.5"></i>Pipeline Design</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">End-to-End System Architecture</h2>
+
+      <div class="glass-panel p-6 rounded-2xl overflow-x-auto">
+        <div class="grid grid-cols-5 gap-3 text-center min-w-[700px]">
+          <!-- Stage 1 -->
+          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+            <span class="text-[10px] font-bold uppercase text-cyan-400">Layer 1</span>
+            <h4 class="font-bold text-white text-sm mt-1">Data Ingestion</h4>
+            <p class="text-[11px] text-slate-400 mt-2">CSV Upload (200MB limit)<br/>Auto-encoding detection<br/>Direct text buffer</p>
+          </div>
+          <!-- Stage 2 -->
+          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+            <span class="text-[10px] font-bold uppercase text-blue-400">Layer 2</span>
+            <h4 class="font-bold text-white text-sm mt-1">Preprocessing</h4>
+            <p class="text-[11px] text-slate-400 mt-2">clean_text() URL/HTML strip<br/>Sentence tokenization<br/>CONTRAST_SPLIT regex</p>
+          </div>
+          <!-- Stage 3 -->
+          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+            <span class="text-[10px] font-bold uppercase text-indigo-400">Layer 3</span>
+            <h4 class="font-bold text-white text-sm mt-1">Aspect Extraction</h4>
+            <p class="text-[11px] text-slate-400 mt-2">spaCy en_core_web_sm<br/>POS NOUN/PROPN filter<br/>Synonym normalization</p>
+          </div>
+          <!-- Stage 4 -->
+          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+            <span class="text-[10px] font-bold uppercase text-purple-400">Layer 4</span>
+            <h4 class="font-bold text-white text-sm mt-1">Polarity Scoring</h4>
+            <p class="text-[11px] text-slate-400 mt-2">VADER Compound Score<br/>Tech Lexicon augmentation<br/>Threshold filter</p>
+          </div>
+          <!-- Stage 5 -->
+          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+            <span class="text-[10px] font-bold uppercase text-emerald-400">Layer 5</span>
+            <h4 class="font-bold text-white text-sm mt-1">UI Presentation</h4>
+            <p class="text-[11px] text-slate-400 mt-2">Streamlit / Vercel Web UI<br/>Plotly / Chart.js graphs<br/>CSV & PDF Exporter</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between text-xs text-slate-400 px-2 font-mono">
+        <span>&bull; Completely Decoupled Architecture</span>
+        <span>&bull; Zero Remote API Latency</span>
+        <span>&bull; 100% Deterministic Execution</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: Core Linguistic Innovation -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="Contrast Splitting">
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+      <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest"><i class="fa-solid fa-code mr-1.5"></i>Linguistic Engine</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Contrastive Clause Division</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-panel p-6 rounded-2xl space-y-3 font-mono text-xs">
+          <span class="text-slate-400 uppercase text-[10px] font-bold">Regex Implementation</span>
+          <div class="p-3 bg-slate-900 rounded-lg text-emerald-400 border border-slate-800">
+            CONTRAST_SPLIT = re.compile(<br/>
+            &nbsp;&nbsp;r'\b(?:but|however|although|though|yet|whereas|while)\b',<br/>
+            &nbsp;&nbsp;re.IGNORECASE<br/>
+            )
+          </div>
+          <p class="text-slate-400 text-xs font-sans pt-2">
+            Identifies coordinating and subordinating contrastive conjunctions marking an explicit polarity shift.
+          </p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl space-y-3 text-xs">
+          <span class="text-slate-400 uppercase text-[10px] font-bold font-mono">Execution Walkthrough</span>
+          <div class="space-y-2">
+            <div class="p-2.5 rounded bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-400 font-bold">Input:</span> "The screen is vibrant, but the battery drains fast."
+            </div>
+            <div class="p-2.5 rounded bg-emerald-950/20 border border-emerald-900/40 text-emerald-300">
+              <span class="font-bold text-emerald-400">Clause A:</span> "The screen is vibrant" &rarr; Aspect: <strong>screen</strong> (Score: <strong>+0.52</strong>)
+            </div>
+            <div class="p-2.5 rounded bg-rose-950/20 border border-rose-900/40 text-rose-300">
+              <span class="font-bold text-rose-400">Clause B:</span> "the battery drains fast" &rarr; Aspect: <strong>battery</strong> (Score: <strong>-0.44</strong>)
+            </div>
+          </div>
+          <p class="text-slate-300 text-[11px] pt-1">
+            <strong>Result:</strong> High-resolution attribution where neither feature cancels the other out.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: Domain Lexical Augmentation -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="Domain Lexicon">
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest"><i class="fa-solid fa-book-bookmark mr-1.5"></i>Custom Vocabulary</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Hardware Domain Lexicon</h2>
+      <p class="text-slate-300 text-sm max-w-3xl">
+        General sentiment dictionaries (TextBlob, raw VADER) misclassify technical hardware adjectives. ReviewPulse injects an electronics domain lexicon:
+      </p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 font-mono text-xs">
+        <div class="glass-panel p-3.5 rounded-xl border border-rose-500/20">
+          <span class="text-rose-400 font-bold">"overheats"</span>
+          <span class="float-right text-rose-400 font-bold">-3.0</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">Thermal throttling</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-rose-500/20">
+          <span class="text-rose-400 font-bold">"blurry"</span>
+          <span class="float-right text-rose-400 font-bold">-2.5</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">Lens / photo noise</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-rose-500/20">
+          <span class="text-rose-400 font-bold">"laggy / stutter"</span>
+          <span class="float-right text-rose-400 font-bold">-2.5</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">UI / frame drops</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-rose-500/20">
+          <span class="text-rose-400 font-bold">"tinny"</span>
+          <span class="float-right text-rose-400 font-bold">-2.0</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">Speaker distortion</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-emerald-500/20">
+          <span class="text-emerald-400 font-bold">"sturdy"</span>
+          <span class="float-right text-emerald-400 font-bold">+2.5</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">Chassis build quality</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-emerald-500/20">
+          <span class="text-emerald-400 font-bold">"crisp / sharp"</span>
+          <span class="float-right text-emerald-400 font-bold">+2.5</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">OLED / display fidelity</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-emerald-500/20">
+          <span class="text-emerald-400 font-bold">"snappy / smooth"</span>
+          <span class="float-right text-emerald-400 font-bold">+2.5</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">Processor speed</p>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl border border-emerald-500/20">
+          <span class="text-emerald-400 font-bold">"durable"</span>
+          <span class="float-right text-emerald-400 font-bold">+2.5</span>
+          <p class="text-[10px] text-slate-400 font-sans mt-1">Longevity & reliability</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: Live UI Walkthrough - Ingestion & Thresholding -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="UI Walkthrough 1">
+    <div class="max-w-6xl mx-auto w-full space-y-4">
+      <span class="text-xs font-bold text-blue-400 uppercase tracking-widest"><i class="fa-solid fa-images mr-1.5"></i>Live Verification</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white">Ingestion, Schema Preview & Thresholding</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-panel p-4 rounded-2xl">
+          <img src="fig1_upload_landing.png" alt="Figure 1: Upload Landing" class="w-full rounded-xl border border-slate-700 shadow-md object-cover h-56">
+          <h4 class="font-bold text-white text-sm mt-3">Figure 1: Initial Landing Interface</h4>
+          <p class="text-xs text-slate-400 mt-1">Drag-and-drop CSV box (200MB limit), data source selector, and sensitivity frequency slider.</p>
+        </div>
+        <div class="glass-panel p-4 rounded-2xl">
+          <img src="fig2_dataset_preview.png" alt="Figure 2: Dataset Preview" class="w-full rounded-xl border border-slate-700 shadow-md object-cover h-56">
+          <h4 class="font-bold text-white text-sm mt-3">Figure 2: Dataset Preview & Column Mapping</h4>
+          <p class="text-xs text-slate-400 mt-1">72 rows parsed; intelligent dropdown allows selecting the target text column (<code>segment</code>).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: Live UI Walkthrough - Charts & Drill-Down -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="UI Walkthrough 2">
+    <div class="max-w-6xl mx-auto w-full space-y-4">
+      <span class="text-xs font-bold text-teal-400 uppercase tracking-widest"><i class="fa-solid fa-chart-column mr-1.5"></i>Interactive Analytics</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white">Visual Analytics & Granular Drill-Down</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-panel p-4 rounded-2xl">
+          <img src="fig3_analysis_threshold5.png" alt="Figure 3: Threshold 5 Analysis" class="w-full rounded-xl border border-slate-700 shadow-md object-cover h-56">
+          <h4 class="font-bold text-white text-sm mt-3">Figure 3: Threshold = 5 (10 Primary Aspects)</h4>
+          <p class="text-xs text-slate-400 mt-1">Discovered top 10 aspects, 60% positive overall ratio, and row-by-row quote verification.</p>
+        </div>
+        <div class="glass-panel p-4 rounded-2xl">
+          <img src="fig4_charts_threshold3.png" alt="Figure 4: Threshold 3 Charts" class="w-full rounded-xl border border-slate-700 shadow-md object-cover h-56">
+          <h4 class="font-bold text-white text-sm mt-3">Figure 4: Threshold = 3 (15 Aspects Expanded)</h4>
+          <p class="text-xs text-slate-400 mt-1">Stacked sentiment volume distribution and ranked horizontal polarity charts in Plotly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: System Robustness & Diagnostic -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="Defensive Engineering">
+    <div class="max-w-6xl mx-auto w-full space-y-4">
+      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest"><i class="fa-solid fa-shield-halved mr-1.5"></i>Negative Testing</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white">System Robustness: Column Diagnostic</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 items-center">
+        <div class="glass-panel p-4 rounded-2xl">
+          <img src="fig5_column_edgecase.png" alt="Figure 5: Column Edge Case" class="w-full rounded-xl border border-slate-700 shadow-md object-cover h-64">
+        </div>
+        <div class="space-y-4">
+          <div class="glass-panel p-5 rounded-xl border-l-4 border-l-amber-500">
+            <h4 class="font-bold text-white text-base">Edge Case: Selecting Numeric Column</h4>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              When a user inadvertently maps a numeric ID column (<code>review_id</code>) as the text input, ReviewPulse processes all 72 rows without throwing exceptions or crashing.
+            </p>
+          </div>
+          <div class="glass-panel p-5 rounded-xl border-l-4 border-l-emerald-500">
+            <h4 class="font-bold text-white text-base">Anti-Hallucination Proof</h4>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              Because numbers lack grammatical nouns and sentiment vocabulary, the engine reports <strong>0 Aspects Found</strong> and <strong>0.00 Avg Score</strong>. It refuses to invent fake attributes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: Benchmark Results -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="Benchmark Results">
+    <div class="max-w-6xl mx-auto w-full space-y-4">
+      <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest"><i class="fa-solid fa-table-list mr-1.5"></i>Empirical Evaluation</span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white">Smartphone Review Benchmark (40 Reviews)</h2>
+
+      <div class="glass-panel p-4 rounded-2xl overflow-x-auto text-xs">
+        <table class="w-full text-left">
+          <thead class="bg-slate-800 text-slate-300 font-bold uppercase text-[10px]">
+            <tr>
+              <th class="p-2.5">Aspect</th>
+              <th class="p-2.5 text-center">Pos</th>
+              <th class="p-2.5 text-center">Neg</th>
+              <th class="p-2.5 text-center">Neu</th>
+              <th class="p-2.5 text-center">Mentions</th>
+              <th class="p-2.5 text-right">Avg Score</th>
+              <th class="p-2.5 text-center">Verdict</th>
+              <th class="p-2.5">Actionable Business Diagnostic</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 font-mono text-[11px]">
+            <tr>
+              <td class="p-2 font-bold text-white">screen</td>
+              <td class="p-2 text-center text-emerald-400">8</td>
+              <td class="p-2 text-center text-rose-400">1</td>
+              <td class="p-2 text-center text-slate-500">0</td>
+              <td class="p-2 text-center">9</td>
+              <td class="p-2 text-right text-emerald-400">+0.669</td>
+              <td class="p-2 text-center"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">Good</span></td>
+              <td class="p-2 font-sans text-slate-300">Major selling point; crisp OLED praised.</td>
+            </tr>
+            <tr>
+              <td class="p-2 font-bold text-white">price</td>
+              <td class="p-2 text-center text-emerald-400">6</td>
+              <td class="p-2 text-center text-rose-400">0</td>
+              <td class="p-2 text-center text-slate-500">1</td>
+              <td class="p-2 text-center">7</td>
+              <td class="p-2 text-right text-emerald-400">+0.736</td>
+              <td class="p-2 text-center"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">Good</span></td>
+              <td class="p-2 font-sans text-slate-300">Competitive value proposition confirmed.</td>
+            </tr>
+            <tr>
+              <td class="p-2 font-bold text-white">battery</td>
+              <td class="p-2 text-center text-emerald-400">5</td>
+              <td class="p-2 text-center text-rose-400">4</td>
+              <td class="p-2 text-center text-slate-500">0</td>
+              <td class="p-2 text-center">9</td>
+              <td class="p-2 text-right text-amber-400">+0.065</td>
+              <td class="p-2 text-center"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">Mixed</span></td>
+              <td class="p-2 font-sans text-slate-300">2-day standby, but heavy gaming drain.</td>
+            </tr>
+            <tr>
+              <td class="p-2 font-bold text-white">camera</td>
+              <td class="p-2 text-center text-emerald-400">3</td>
+              <td class="p-2 text-center text-rose-400">3</td>
+              <td class="p-2 text-center text-slate-500">2</td>
+              <td class="p-2 text-center">8</td>
+              <td class="p-2 text-right text-rose-400">-0.047</td>
+              <td class="p-2 text-center"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">Mixed</span></td>
+              <td class="p-2 font-sans text-slate-300">Great daylight; blurry low-light photos.</td>
+            </tr>
+            <tr>
+              <td class="p-2 font-bold text-white">customer service</td>
+              <td class="p-2 text-center text-emerald-400">1</td>
+              <td class="p-2 text-center text-rose-400">2</td>
+              <td class="p-2 text-center text-slate-500">0</td>
+              <td class="p-2 text-center">3</td>
+              <td class="p-2 text-right text-rose-400">-0.004</td>
+              <td class="p-2 text-center"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">Poor</span></td>
+              <td class="p-2 font-sans text-slate-300">Unresponsive email and slow RMA replacement.</td>
+            </tr>
+            <tr>
+              <td class="p-2 font-bold text-white">software</td>
+              <td class="p-2 text-center text-emerald-400">1</td>
+              <td class="p-2 text-center text-rose-400">2</td>
+              <td class="p-2 text-center text-slate-500">0</td>
+              <td class="p-2 text-center">3</td>
+              <td class="p-2 text-right text-rose-400">-0.119</td>
+              <td class="p-2 text-center"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">Poor</span></td>
+              <td class="p-2 font-sans text-slate-300">UI lag and bloatware post-OTA updates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: Viva Defense / Technical Comparison -->
+  <section class="slide flex-col justify-center px-12 md:px-24 py-16" data-title="Viva Defense">
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest"><i class="fa-solid fa-graduation-cap mr-1.5"></i>Viva Defense Cheat Sheet</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Classical NLP vs. Generative LLMs</h2>
+
+      <div class="glass-panel p-6 rounded-2xl overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-800 text-slate-300 font-bold uppercase text-[10px]">
+            <tr>
+              <th class="p-3">Evaluation Dimension</th>
+              <th class="p-3 text-cyan-400">ReviewPulse (Hybrid Classical NLP)</th>
+              <th class="p-3 text-slate-400">Cloud LLM (e.g. GPT-4)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            <tr>
+              <td class="p-3 font-bold text-white">Operating Cost</td>
+              <td class="p-3 text-emerald-400 font-bold">$0.00 (Zero API bills, free forever)</td>
+              <td class="p-3 text-rose-400">Expensive per-token API costs</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-white">Inference Latency</td>
+              <td class="p-3 text-emerald-400 font-bold">&lt; 0.5s per batch on standard CPU</td>
+              <td class="p-3 text-rose-400">3 &ndash; 10 seconds via remote cloud API</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-white">Data Privacy</td>
+              <td class="p-3 text-emerald-400 font-bold">100% Local (customer reviews never leave machine)</td>
+              <td class="p-3 text-rose-400">Customer feedback transmitted to third party</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-white">Reproducibility</td>
+              <td class="p-3 text-emerald-400 font-bold">Deterministic (100% exact repeatability)</td>
+              <td class="p-3 text-amber-400">Stochastic (temperature-dependent variance)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-white">Hallucination Risk</td>
+              <td class="p-3 text-emerald-400 font-bold">0% (Strict grammatical and lexical rules)</td>
+              <td class="p-3 text-rose-400">Prone to synthetic feature hallucination</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: Conclusion & Q&A -->
+  <section class="slide flex-col items-center justify-center p-8 text-center" data-title="Conclusion">
+    <div class="max-w-4xl space-y-6">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white text-3xl mx-auto shadow-lg shadow-cyan-500/20">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">
+        Thank You! Any Questions?
+      </h2>
+      <p class="text-slate-300 text-lg max-w-2xl mx-auto">
+        ReviewPulse transforms unstructured customer feedback into actionable engineering priorities.
+      </p>
+
+      <div class="pt-4 flex flex-wrap justify-center gap-4 text-xs font-mono">
+        <a href="https://github.com/Nethanx05-z/ReviewPulse" target="_blank" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center space-x-2 transition">
+          <i class="fa-brands fa-github text-base"></i>
+          <span>github.com/Nethanx05-z/ReviewPulse</span>
+        </a>
+        <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FNethanx05-z%2FReviewPulse" target="_blank" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold flex items-center space-x-2 transition shadow-lg shadow-blue-600/30">
+          <i class="fa-solid fa-rocket text-base"></i>
+          <span>Deploy on Vercel</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Navigation Controls -->
+  <div class="fixed bottom-6 right-6 flex items-center space-x-3 z-40">
+    <button onclick="prevSlide()" class="w-10 h-10 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white flex items-center justify-center border border-slate-700 shadow-lg transition">
+      <i class="fa-solid fa-chevron-left text-sm"></i>
+    </button>
+    <button onclick="nextSlide()" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 transition">
+      <i class="fa-solid fa-chevron-right text-sm"></i>
+    </button>
+  </div>
+
+  <!-- Speaker Notes Drawer -->
+  <div id="notesDrawer" class="fixed bottom-0 left-0 right-0 glass-panel p-5 border-t border-slate-700 text-xs text-slate-300 transform translate-y-full transition-transform duration-300 z-50 max-h-48 overflow-y-auto">
+    <div class="flex items-center justify-between mb-2">
+      <span class="font-bold text-cyan-400 uppercase tracking-wider flex items-center space-x-1.5">
+        <i class="fa-solid fa-microphone"></i>
+        <span>Speaker Script & Talking Points</span>
+      </span>
+      <button onclick="toggleSpeakerNotes()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <p id="speakerNotesText" class="leading-relaxed"></p>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    const speakerNotes = [
+      "Good morning respected evaluators. Today I am presenting ReviewPulse, an Aspect-Based Sentiment Analysis system designed to uncover granular, feature-level consumer sentiment from unstructured product reviews.",
+      "Traditional sentiment tools classify entire reviews into a single positive or negative label. When a buyer writes 'The battery lasts two days, but the camera is blurry', monolithic models average the scores to zero, creating a massive blind spot for product engineers.",
+      "ReviewPulse solves this by shifting the paradigm from document-level labeling to component-level intelligence: segmenting clauses, extracting nouns with spaCy, and scoring localized polarity.",
+      "Our system architecture is organized into five decoupled layers: Ingestion with encoding fallback, Preprocessing with contrast splitting, Aspect Extraction with spaCy, Polarity Scoring with VADER, and the UI Layer.",
+      "The technical differentiator is our contrastive splitting engine using the CONTRAST_SPLIT regex. Splitting sentences before polarity calculation prevents opposite sentiments from canceling out.",
+      "Generic sentiment dictionaries don't understand electronics jargon. We augmented VADER with domain-specific weights like 'blurry' (-2.5), 'overheats' (-3.0), and 'sturdy' (+2.5).",
+      "Here is the verified UI in action: Figure 1 shows drag-and-drop ingestion with sensitivity thresholding, and Figure 2 demonstrates automatic column schema mapping for arbitrary CSV files.",
+      "Figure 3 shows analysis at threshold 5, identifying 10 key features and row-level auditability. Figure 4 shows threshold 3 expanding to 15 aspects with Plotly grouped and ranked polarity bar charts.",
+      "We tested defensive robustness: when a user accidentally selects a numeric ID column, the engine cleanly processes all rows, producing 0 aspects without crashing or hallucinating.",
+      "On our benchmark 40-review dataset, screen and price earned 'Good' verdicts, while battery and camera emerged as 'Mixed', and customer service and software were flagged as 'Poor'.",
+      "Why not use an LLM? ReviewPulse offers zero operating cost, sub-second latency on standard CPUs, 100% data privacy for proprietary customer logs, and 0% hallucination risk.",
+      "In conclusion, ReviewPulse turns messy feedback into actionable engineering priorities. The code is open-source on GitHub and ready for Vercel deployment. Thank you!"
+    ];
+
+    function showSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= slides.length) index = slides.length - 1;
+      
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      // Update counter & progress
+      document.getElementById('slideCounter').innerText = `${currentSlide + 1} / ${slides.length}`;
+      document.getElementById('progressBar').style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+
+      // Update speaker notes
+      document.getElementById('speakerNotesText').innerText = speakerNotes[currentSlide] || "No notes for this slide.";
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) showSlide(currentSlide - 1);
+    }
+
+    function toggleSpeakerNotes() {
+      const drawer = document.getElementById('notesDrawer');
+      drawer.classList.toggle('translate-y-full');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 's' || e.key === 'S') {
+        toggleSpeakerNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      }
+    });
+
+    // Initialize
+    showSlide(0);
+  </script>
+</body>
+</html>
